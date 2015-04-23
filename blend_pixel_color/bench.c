@@ -147,6 +147,7 @@ int main(){
   _op_blend_pan_c_dp_neon(s, m, c, d14, len);
   stop_n_print();
 
+  int ret = 0;
   for(i = 0; i < len; i++){
     if(
 #ifdef __arm__
@@ -161,7 +162,28 @@ int main(){
           (d15[i]!=d16[i]) ||
           (d1[i]!=d0[i])
       )
-      return 1;
+      ret = 1;
   }
-  return 0;
+  free(d0);
+  free(d1);
+#ifdef __arm__
+  free(d2);
+#endif
+  free(d3);
+  free(d4);
+  free(d5);
+  free(d6);
+  free(d7);
+  free(d8);
+  free(d9);
+  free(d10);
+  free(d11);
+  free(d12);
+  free(d13);
+  free(d14);
+  free(d15);
+  free(d16);
+  free(m);
+  free(s);
+  return ret;
 }

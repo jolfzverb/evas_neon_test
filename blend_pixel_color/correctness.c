@@ -150,5 +150,26 @@ int main(){
     printf("ok\n");
   }
 
+  free(d0);
+  free(d1);
+#ifdef __arm__
+  free(d2);
+#endif
+  free(d3);
+  free(d4);
+  free(d5);
+  free(d6);
+  free(d7);
+  free(d8);
+  free(d9);
+  free(d10);
+  free(d11);
+  free(d12);
+  free(d13);
+  free(d14);
+  free(d15);
+  free(d16);
+  free(m);
+  free(s);
   return ret;
 }
