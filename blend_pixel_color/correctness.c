@@ -25,6 +25,8 @@ int main(){
   DATA32 *d12 = malloc(sizeof(DATA32)*len);
   DATA32 *d13 = malloc(sizeof(DATA32)*len);
   DATA32 *d14 = malloc(sizeof(DATA32)*len);
+  DATA32 *d15 = malloc(sizeof(DATA32)*len);
+  DATA32 *d16 = malloc(sizeof(DATA32)*len);
   DATA8 *m = malloc(sizeof(DATA8)*len);
   DATA32 *s = malloc(sizeof(DATA32)*len);
   DATA32 c = ((rand()&0xffff) << 16) + (rand()&0xffff);
@@ -48,6 +50,8 @@ int main(){
     d12[i] =
     d13[i] =
     d14[i] =
+    d15[i] =
+    d16[i] =
           ((rand()&0xffff) << 16) + (rand()&0xffff);
     s[i] = ((rand()&0xffff) << 16) + (rand()&0xffff);
     m[i] = rand()&0xff;
@@ -68,6 +72,9 @@ int main(){
   _op_blend_p_caa_dp_neon(s, m, c, d10, len);
   _op_blend_pan_caa_dp(s, m, c, d11, len);
   _op_blend_pan_caa_dp_neon(s, m, c, d12, len);
+
+  _op_blend_rel_p_c_dp(s, m, c, d15, len);
+  _op_blend_rel_p_c_dp_neon(s, m, c, d16, len);
 
   c = 0;
   _op_blend_pan_c_dp(s, m, c, d13, len);
@@ -130,6 +137,13 @@ int main(){
   }
   printf("pan_c intrinsics NULL c test ... ");
   if(compare(d13,d14,size,len)) {
+    printf("fail\n");
+    ret = 1;
+  } else {
+    printf("ok\n");
+  }
+  printf("rel_p_c intrinsics c test ... ");
+  if(compare(d15,d16,size,len)) {
     printf("fail\n");
     ret = 1;
   } else {

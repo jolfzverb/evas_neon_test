@@ -1,6 +1,8 @@
 #include "blend.h"
 /* blend pixel x color --> dst */
 
+
+
 void
 _op_blend_p_c_dp(DATA32 *s, DATA8 *m EINA_UNUSED, DATA32 c, DATA32 *d, int l) {
    DATA32 *e;
@@ -77,3 +79,16 @@ _op_blend_pan_caa_dp(DATA32 *s, DATA8 *m EINA_UNUSED, DATA32 c, DATA32 *d, int l
                      });
 }
 
+void
+_op_blend_rel_p_c_dp(DATA32 *s, DATA8 *m EINA_UNUSED, DATA32 c, DATA32 *d, int l) {
+   DATA32 *e;
+   int alpha;
+   UNROLL8_PLD_WHILE(d, l, e,
+                     {
+                        DATA32 sc = MUL4_SYM(c, *s);
+                        alpha = 256 - (sc >> 24);
+                        *d = MUL_SYM(*d >> 24, sc) + MUL_256(alpha, *d);
+                        d++;
+                        s++;
+                     });
+}
