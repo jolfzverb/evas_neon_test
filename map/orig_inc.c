@@ -1,3 +1,4 @@
+#ifdef __arm__
 #ifdef SMOOTH
 {
   DATA32 *d = result;
@@ -228,4 +229,5 @@
         ww--;
      }
 }
+#endif
 #endif

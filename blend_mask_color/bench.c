@@ -82,7 +82,7 @@ int main(){
   _op_blend_mas_can_dp_neon_inline(s, m, c, d5, len);
   stop_n_print();
 #endif
-
+  int ret = 0;
   for(i = 0; i < len; i++){
     if(
 #ifdef __arm__
@@ -92,7 +92,16 @@ int main(){
           (d3[i]!=d1[i]) ||
           (d2[i]!=d0[i])
       )
-      return 1;
+      ret = 1;
   }
-  return 0;
+  free(d0);
+  free(d1);
+  free(d2);
+  free(d3);
+#ifdef __arm__
+  free(d4);
+  free(d5);
+#endif
+  free(m);
+  return ret;
 }

@@ -103,5 +103,21 @@ int main(){
 #endif
 
 
+  free(d0);
+  free(d1);
+  free(d2);
+  free(d3);
+#ifdef __arm__
+  free(d4);
+  free(d5);
+  free(d6);
+  free(d7);
+#endif
+  free(d8);
+  free(d9);
+  free(d10);
+  free(d11);
+  free(s);
+  free(s1);
   return ret;
 }

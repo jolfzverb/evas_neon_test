@@ -81,6 +81,7 @@ int main(){
   stop_n_print();
 #endif
 
+  int ret = 0;
   for(i = 0; i < len; i++){
     if(
 #ifdef __arm__
@@ -92,7 +93,23 @@ int main(){
           ( d0[i] != d2[i] ) ||
           ( d1[i] != d3[i] )
       )
-      return 1;
+      ret = 1;
   }
-  return 0;
+  free(d0);
+  free(d1);
+  free(d2);
+  free(d3);
+#ifdef __arm__
+  free(d4);
+  free(d5);
+  free(d6);
+  free(d7);
+#endif
+  free(d8);
+  free(d9);
+  free(d10);
+  free(d11);
+  free(s);
+  free(s1);
+  return ret;
 }

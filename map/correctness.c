@@ -373,5 +373,15 @@ int main(){
 
 
 
+  free(val1);
+  free(val2);
+  free(val3);
+  free(val4);
+  free(ru);
+  free(rv);
+  free(cv);
+  free(result1);
+  free(result2);
+  free(result3);
   return ret;
 }

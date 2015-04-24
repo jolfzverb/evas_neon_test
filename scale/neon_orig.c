@@ -2,7 +2,7 @@
 #include "scale.h"
 
 int neon_orig(DATA32* _p0, DATA32* _p1, DATA32* _p2, DATA32* _p3, DATA32* _ax, DATA32 _ay, DATA32* result, int len) {
-
+#ifdef __arm__
   int ay = _ay;
   int i;
   DATA32* pbuf = result;
@@ -52,6 +52,7 @@ int neon_orig(DATA32* _p0, DATA32* _p1, DATA32* _p2, DATA32* _p3, DATA32* _ax, D
     else
       *pbuf++ = p0;
   }
+#endif
 	return 0;
 }
 

@@ -96,5 +96,14 @@ int main(){
   }
 #endif
 
+  free(d0);
+  free(d1);
+  free(d2);
+  free(d3);
+#ifdef __arm__
+  free(d4);
+  free(d5);
+#endif
+  free(m);
   return ret;
 }

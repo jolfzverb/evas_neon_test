@@ -41,12 +41,21 @@ int main(){
   start();
   neon_orig(p0, p1, p2, p3, ax, ay, result3, len);
   stop_n_print();
+  int ret = 0;
   for(i = 0; i < len; i++){
     if(result2[i]!=result1[i])
-      return 1;
+      ret = 1;
   }
 
 
+  free(p0);
+  free(p1);
+  free(p2);
+  free(p3);
+  free(ax);
+  free(result1);
+  free(result2);
+  free(result3);
 
-  return 0;
+  return ret;
 }

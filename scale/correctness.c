@@ -51,5 +51,13 @@ int main(){
 
 
 
+  free(p0);
+  free(p1);
+  free(p2);
+  free(p3);
+  free(ax);
+  free(result1);
+  free(result2);
+  free(result3);
   return ret;
 }

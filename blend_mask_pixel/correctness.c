@@ -84,5 +84,17 @@ int main(){
   }
 
 
+  free(d0);
+  free(d1);
+  free(d2);
+  free(d3);
+  free(d4);
+  free(d5);
+  free(d6);
+  free(d7);
+  free(m);
+  free(m0);
+  free(m1);
+  free(s);
   return ret;
 }
