@@ -4,6 +4,31 @@
 #endif
 #endif
 /* blend pixel --> dst */
+#ifdef BUILD_NEON
+#ifdef BUILD_NEON_INTRINSICS
+static void
+_op_blend_rel_p_dp_neon(DATA32 *s, DATA8 *m, DATA32 c, DATA32 *d, int l) {
+   DATA32 *e = d + l;
+   while (d < e) {
+      l = 256 - (*s >> 24);
+      c = 1 + (*d >> 24);
+      *d = MUL_256(c, *s) + MUL_256(l, *d);
+      d++;
+      s++;
+   }
+}
+
+static void
+_op_blend_rel_pan_dp_neon(DATA32 *s, DATA8 *m, DATA32 c, DATA32 *d, int l) {
+   DATA32 *e = d + l;
+   while (d < e) {
+      c = 1 + (*d >> 24);
+      *d++ = MUL_256(c, *s);
+      s++;
+   }
+}
+#endif
+#endif
 
 #ifdef BUILD_NEON
 static void
