@@ -98,5 +98,15 @@ int main(){
     printf("ok\n");
   }
 
+  free(d0);
+  free(d1);
+#ifdef __arm__
+  free(d2);
+  free(d5);
+#endif
+  free(d3);
+  free(d4);
+  free(d6);
+  free(d7);
   return ret;
 }

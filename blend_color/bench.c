@@ -80,6 +80,7 @@ int main(){
   stop_n_print();
 #endif
 
+  int ret = 0;
   for(i = 0; i < len; i++){
     if(
 #ifdef __arm__
@@ -90,7 +91,17 @@ int main(){
           (d6[i]!=d7[i]) ||
           (d0[i]!=d1[i])
       )
-      return 1;
+      ret = 1;
   }
-  return 0;
+  free(d0);
+  free(d1);
+#ifdef __arm__
+  free(d2);
+  free(d5);
+#endif
+  free(d3);
+  free(d4);
+  free(d6);
+  free(d7);
+  return ret;
 }
