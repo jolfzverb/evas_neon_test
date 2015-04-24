@@ -15,6 +15,8 @@ int main(){
   DATA32 *d2 = malloc(sizeof(DATA32)*len);
   DATA32 *d5 = malloc(sizeof(DATA32)*len);
 #endif
+  DATA32 *d6 = malloc(sizeof(DATA32)*len);
+  DATA32 *d7 = malloc(sizeof(DATA32)*len);
   DATA32 *s = NULL;
   DATA8 *a = NULL;
   int i;
@@ -23,6 +25,8 @@ int main(){
   DATA32 c = ((rand()&0xffff) << 16) + (rand()&0xffff);
   if(c>>24 == 0)
      c=0;
+
+  DATA32 c1 = ((rand()&0xffff) << 16) + (rand()&0xffff);
 
   for(i = 0; i < len; i++){
     d0[i] =
@@ -33,6 +37,8 @@ int main(){
     d2[i] =
     d5[i] =
 #endif
+    d6[i] =
+    d7[i] =
           i+c;
   }
 
@@ -50,6 +56,14 @@ int main(){
   _op_blend_c_dp_neon_inline(s, a, c, d2, len);
   stop_n_print();
 #endif
+  printf("10000000 pixels by _op_blend_rel_c_dp:\t");
+  start();
+  _op_blend_rel_c_dp(s, a, c1, d6, len);
+  stop_n_print();
+  printf("10000000 pixels by _op_blend_rel_c_dp_neon:\t");
+  start();
+  _op_blend_rel_c_dp_neon(s, a, c1, d7, len);
+  stop_n_print();
   c = 0;
   printf("10000000 pixels by _op_blend_c_dp with null alpha:\t");
   start();
@@ -73,6 +87,7 @@ int main(){
           (d3[i]!=d5[i]) ||
 #endif
           (d3[i]!=d4[i]) ||
+          (d6[i]!=d7[i]) ||
           (d0[i]!=d1[i])
       )
       return 1;
