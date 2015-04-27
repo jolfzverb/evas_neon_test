@@ -17,6 +17,8 @@ int main(){
   DATA32 *d5 = malloc(sizeof(DATA32)*len);
   DATA32 *d6 = malloc(sizeof(DATA32)*len);
   DATA32 *d7 = malloc(sizeof(DATA32)*len);
+  DATA32 *d8 = malloc(sizeof(DATA32)*len);
+  DATA32 *d9 = malloc(sizeof(DATA32)*len);
   DATA8 *m = malloc(sizeof(DATA8)*len);
   DATA8 *m0 = malloc(sizeof(DATA8)*len);
   DATA8 *m1 = malloc(sizeof(DATA8)*len);
@@ -33,6 +35,8 @@ int main(){
     d5[i] =
     d6[i] =
     d7[i] =
+    d8[i] =
+    d9[i] =
     s[i] =
           i+c;
     m[i] = i&0xff;
@@ -81,12 +85,23 @@ int main(){
   _op_blend_pas_mas_dp_neon(s, m1, c, d7, len);
   stop_n_print();
 
+  printf("10000000 pixels by _op_blend_rel_p_mas_dp:\t");
+  start();
+  _op_blend_rel_p_mas_dp(s, m, c, d8, len);
+  stop_n_print();
+
+  printf("10000000 pixels by _op_blend_rel_p_mas_dp_neon:\t");
+  start();
+  _op_blend_rel_p_mas_dp_neon(s, m, c, d9, len);
+  stop_n_print();
+
   int ret = 0;
   for(i = 0; i < len; i++){
     if(
           (d1[i]!=d0[i]) ||
           (d4[i]!=d5[i]) ||
           (d6[i]!=d7[i]) ||
+          (d8[i]!=d9[i]) ||
           (d3[i]!=d2[i])
       )
       ret = 1;
@@ -99,6 +114,8 @@ int main(){
   free(d5);
   free(d6);
   free(d7);
+  free(d8);
+  free(d9);
   free(m);
   free(m0);
   free(m1);

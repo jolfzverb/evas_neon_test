@@ -16,6 +16,8 @@ int main(){
   DATA32 *d5 = malloc(sizeof(DATA32)*len);
   DATA32 *d6 = malloc(sizeof(DATA32)*len);
   DATA32 *d7 = malloc(sizeof(DATA32)*len);
+  DATA32 *d8 = malloc(sizeof(DATA32)*len);
+  DATA32 *d9 = malloc(sizeof(DATA32)*len);
   DATA8 *m = malloc(sizeof(DATA8)*len);
   DATA8 *m0 = malloc(sizeof(DATA8)*len);
   DATA8 *m1 = malloc(sizeof(DATA8)*len);
@@ -32,6 +34,8 @@ int main(){
     d5[i] =
     d6[i] =
     d7[i] =
+    d8[i] =
+    d9[i] =
           ((rand()&0xffff) << 16) + (rand()&0xffff);
     s[i] = ((rand()&0xffff) << 16) + (rand()&0xffff);
     m[i] = rand()&0xff;
@@ -50,6 +54,9 @@ int main(){
 
   _op_blend_pas_mas_dp(s, m1, c, d6, len);
   _op_blend_pas_mas_dp_neon(s, m1, c, d7, len);
+
+  _op_blend_rel_p_mas_dp(s, m, c, d8, len);
+  _op_blend_rel_p_mas_dp_neon(s, m, c, d9, len);
 
   size_t size = sizeof(DATA32);
   int ret = 0;
@@ -82,6 +89,13 @@ int main(){
   } else {
     printf("ok\n");
   }
+  printf("rel_p_mas test ... ");
+  if(compare(d8,d9,size,len)) {
+    printf("fail\n");
+    ret = 1;
+  } else {
+    printf("ok\n");
+  }
 
 
   free(d0);
@@ -92,6 +106,8 @@ int main(){
   free(d5);
   free(d6);
   free(d7);
+  free(d8);
+  free(d9);
   free(m);
   free(m0);
   free(m1);
