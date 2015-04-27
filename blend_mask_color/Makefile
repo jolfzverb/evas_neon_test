@@ -3,9 +3,9 @@ bench_ob = bench.o $(func_ob) time.o
 correctness_ob = correctness.o $(func_ob) correct.o
 arch = $(shell uname -m)
 ifeq ($(arch), aarch64)
-   CFLAGS+= -march=armv8-a+fp+simd+crc+crypto -ansi -std=c99 -Wall -Werror -pedantic -O2 -Wno-error=variadic-macros -static -Wno-variadic-macros
+   CFLAGS+= -march=armv8-a+fp+simd+crc+crypto -ansi -std=c99 -Wall -Werror -pedantic -O2 -Wno-error=variadic-macros -static -Wno-variadic-macros -Wno-error=maybe-uninitialized
 else
-   CFLAGS+= -mfpu=neon -ansi -std=c99 -Wall -Werror -pedantic -O2 -Wno-error=variadic-macros -static -Wno-variadic-macros
+   CFLAGS+= -mfpu=neon -ansi -std=c99 -Wall -Werror -pedantic -O2 -Wno-error=variadic-macros -static -Wno-variadic-macros -Wno-error=maybe-uninitialized
 endif
 
 all : bench correctness

@@ -2,6 +2,20 @@
 /* blend color -> dst */
 
 void
+_op_blend_rel_mas_c_dp(DATA32 *s EINA_UNUSED, DATA8 *m, DATA32 c, DATA32 *d, int l) {
+   DATA32 *e;
+   int alpha;
+   UNROLL8_PLD_WHILE(d, l, e,
+                     {
+                        DATA32 mc = MUL_SYM(*m, c);
+                        alpha = 256 - (mc >> 24);
+                        *d = MUL_SYM(*d >> 24, mc) + MUL_256(alpha, *d);
+                        d++;
+                        m++;
+                     });
+}
+
+void
 _op_blend_mas_c_dp(DATA32 *s EINA_UNUSED, DATA8 *m, DATA32 c, DATA32 *d, int l) {
    DATA32 *e;
    int alpha = 256 - (c >> 24);

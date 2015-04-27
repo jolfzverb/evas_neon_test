@@ -14,25 +14,14 @@ int main(){
   DATA32 *d4 = malloc(sizeof(DATA32)*len);
   DATA32 *d5 = malloc(sizeof(DATA32)*len);
 #endif
+  DATA32 *d6 = malloc(sizeof(DATA32)*len);
+  DATA32 *d7 = malloc(sizeof(DATA32)*len);
   DATA8 *m = malloc(sizeof(DATA8)*len);
   DATA32 *s = NULL;
   int i;
   srand(0);
 
-//  DATA8 a = rand()&0xff;
-//  DATA8 r = rand()&0xff;
-//  DATA8 g = rand()&0xff;
-//  DATA8 b = rand()&0xff;
-//  if((a<r)||(a<g)||(a<b)){
-//     r = r/2;
-//     g = g/2;
-//     b = b/2;
-//  }
-//  while((a<r)||(a<g)||(a<b)){
-//     a++;
-//  }
   DATA32 c = ((rand()&0xffff) << 16) + (rand()&0xffff);
-  //DATA32 c = (a<<24)+(r<<16)+(g<<8)+b;
 
   for(i = 0; i < len; i++){
     d0[i] =
@@ -43,11 +32,11 @@ int main(){
     d4[i] =
     d5[i] =
 #endif
+    d6[i] =
+    d7[i] =
           ((rand()&0xffff) << 16) + (rand()&0xffff);
     m[i] = rand()&0xff;
   }
-  //int alpha = (c>>24);
-  //c = ((MUL_256(alpha,c))&0xffffff)+(alpha<<24);
 
   _op_blend_mas_c_dp(s, m, c, d0, len);
   _op_blend_mas_can_dp(s, m, c, d1, len);
@@ -57,6 +46,8 @@ int main(){
   _op_blend_mas_c_dp_neon_inline(s, m, c, d4, len);
   _op_blend_mas_can_dp_neon_inline(s, m, c, d5, len);
 #endif
+  _op_blend_rel_mas_c_dp(s, m, c, d6, len);
+  _op_blend_rel_mas_c_dp_neon(s, m, c, d7, len);
 
   size_t size = sizeof(DATA32);
   int ret = 0;
@@ -75,9 +66,6 @@ int main(){
   } else {
     printf("ok\n");
   }
-  for(i = 0; i < 1000; i++)
-     if(d1[i]!=d3[i])
-        printf("%x %x %x %x %d\n",d1[i], d3[i], c, m[i], i);
 
 #ifdef __arm__
   printf("c inline test ... ");
@@ -95,6 +83,13 @@ int main(){
     printf("ok\n");
   }
 #endif
+  printf("rel_mas_c intrinsics test ... ");
+  if(compare(d6,d7,size,len)) {
+    printf("fail\n");
+    ret = 1;
+  } else {
+    printf("ok\n");
+  }
 
   free(d0);
   free(d1);
@@ -104,6 +99,8 @@ int main(){
   free(d4);
   free(d5);
 #endif
+  free(d6);
+  free(d7);
   free(m);
   return ret;
 }
