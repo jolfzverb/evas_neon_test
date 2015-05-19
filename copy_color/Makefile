@@ -1,4 +1,4 @@
-func_ob = c_orig.o neon_intrinsics.o neon_inline.o
+func_ob = op_copy_color_.o neon_intrinsics.o neon_inline.o
 bench_ob = bench.o $(func_ob) time.o
 correctness_ob = correctness.o $(func_ob) correct.o
 arch = $(shell uname -m)
@@ -18,9 +18,9 @@ correctness : $(correctness_ob)
 
 time.o bench.o : time.h
 
-$(func_ob): blend.h op_blend_color_neon.c
+$(func_ob): copy.h op_copy_color_neon.c
 
-correctness.o bench.o : blend.h
+correctness.o bench.o : copy.h
 
 correctness.o correct.o : correct.h
 

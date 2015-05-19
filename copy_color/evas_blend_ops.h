@@ -53,7 +53,7 @@
    + ((c1) & 0xff000000)) & 0xff000000) )
 
 
-#ifdef BUILD_NEON_INLINE
+#ifndef BUILD_NEON_INTRINSICS
 #define FPU_NEON \
 	__asm__ __volatile__(".fpu neon \n\t");
 

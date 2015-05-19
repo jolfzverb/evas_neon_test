@@ -1,9 +1,9 @@
-#include "blend.h"
-/* blend color --> dst */
+#include "copy.h"
+/* copy color --> dst */
 #ifdef __arm__
-#define _op_blend_c_dp_neon _op_blend_c_dp_neon_inline
+#define _op_copy_c_dp_neon _op_copy_c_dp_neon_inline
 #define static
 #define asm __asm__
-#include "op_blend_color_neon.c"
-#undef _op_blend_c_dp_neon
+#include "op_copy_color_neon.c"
+#undef _op_copy_c_dp_neon
 #endif
